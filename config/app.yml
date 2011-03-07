@@ -27,3 +27,11 @@ all:
         callback:         testCallback
         routing_key:      '#.test'
 
+    rpc_clients:
+      test:
+        connection: default
+
+    rpc_servers:
+      test:
+        connection: default
+        callback: testCallback

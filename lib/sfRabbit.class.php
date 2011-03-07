@@ -65,7 +65,7 @@ class sfRabbit {
 		$consumer->setQueueOptions($queue_options);
 
 		if (!emtpy($config['callback'])) {
-			$consumer->setCallback(array($config['callback'],'execute'));
+			$consumer->setCallback(array($config['callback'], 'execute'));
 		}
 
 		return $consumer;
@@ -75,7 +75,7 @@ class sfRabbit {
 		$config = sfConfig::get('app_sfRabbitPlugin_anon_consumers');
 
 		if (empty($config[$name]) or !$config = $config[$name]) {
-			throw new Exception(sprintf('There is no rabbitmq consumers with "%s" name in config', $name));
+			throw new Exception(sprintf('There is no rabbitmq anon consumers with "%s" name in config', $name));
 		}
 
 		$con_name = (empty($config['connection'])) ? ('default') : ($config['connection']);
@@ -87,7 +87,11 @@ class sfRabbit {
 		$consumer->setExchangeOptions($exchange_options);
 
 		if (!emtpy($config['callback'])) {
-			$consumer->setCallback(array($config['callback'],'execute'));
+			$callback = $config['callback'];
+			if (!is_array($callback)) {
+				$callback = array($callback, 'execute');
+			}
+			$consumer->setCallback($callback);
 		}
 
 
@@ -95,9 +99,50 @@ class sfRabbit {
 			$consumer->setRoutingKey($config['routing_key']);
 		}
 
-
-
 		return $consumer;
+	}
+
+	public static function getRpcClient($name) {
+		$config = sfConfig::get('app_sfRabbitPlugin_rpc_clients');
+
+		if (empty($config[$name]) or !$config = $config[$name]) {
+			throw new Exception(sprintf('There is no rabbitmq rpc client with "%s" name in config', $name));
+		}
+
+		$con_name = (empty($config['connection'])) ? ('default') : ($config['connection']);
+		$con_params = self::getConnectionParams($con_name);
+
+		$client = new RpcClient($con_params['host'], $con_params['port'], $con_params['user'], $con_params['password'], $con_params['vhost']);
+		$client->initClient();
+
+		return $client;
+	}
+
+	public static function getRpcServer($name) {
+		$config = sfConfig::get('app_sfRabbitPlugin_rpc_clients');
+
+		if (empty($config[$name]) or !$config = $config[$name]) {
+			throw new Exception(sprintf('There is no rabbitmq rpc server with "%s" name in config', $name));
+		}
+
+		if (empty($config['callback'])) {
+			throw new Exception(sprintf('Callback must be set for rabbitmq rpc server with "%s" name', $name));
+		}
+
+		$con_name = (empty($config['connection'])) ? ('default') : ($config['connection']);
+		$con_params = self::getConnectionParams($con_name);
+
+		$server = new RpcServer($con_params['host'], $con_params['port'], $con_params['user'], $con_params['password'], $con_params['vhost']);
+		$server->initServer($name);
+
+		$callback = $config['callback'];
+		if (!is_array($callback)) {
+			$callback = array($callback, 'execute');
+		}
+		$server->setCallback($callback);
+		$server->start();
+
+		return $server;
 	}
 
 }
