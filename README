@@ -1,0 +1,6 @@
+sfRabbitPlugin is symfony 1.4 plugin that provides access to rabbitmq messaging system.
+
+Realy it's just backport of videlalvaro's symfony2 <a href='https://github.com/videlalvaro/RabbitMqBundle'>RabbitMqBundle</a> 
+
+It uses videlalvaro's <a href='https://github.com/videlalvaro/Thumper'>Thumper</a> and tnc's <a href="http://github.com/tnc/php-amqplib">php-amqplib</a> 
+as backend,
