@@ -11,12 +11,19 @@ all:
     producers:
       test:
         connection:       default
-        exchange_options: {name: test, type: direct}
+        exchange_options: {name: test_direct, type: direct}
 
     consumers:
       test:
         connection:       default
-        exchange_options: {name: test, type: direct}
+        exchange_options: {name: test_direct, type: direct}
         queue_options: {name: test}
         callback:         testCallback
+
+    anon_consumers:
+      test:
+        connection:       default
+        exchange_options: {name: test_direct, type: topic}
+        callback:         testCallback
+        routing_key:      '#.test'
 

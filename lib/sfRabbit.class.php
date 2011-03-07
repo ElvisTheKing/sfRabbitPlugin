@@ -71,4 +71,33 @@ class sfRabbit {
 		return $consumer;
 	}
 
+	public static function getAnonConsumer($name) {
+		$config = sfConfig::get('app_sfRabbitPlugin_anon_consumers');
+
+		if (empty($config[$name]) or !$config = $config[$name]) {
+			throw new Exception(sprintf('There is no rabbitmq consumers with "%s" name in config', $name));
+		}
+
+		$con_name = (empty($config['connection'])) ? ('default') : ($config['connection']);
+		$con_params = self::getConnectionParams($con_name);
+
+		$consumer = new AnonConsumer($con_params['host'], $con_params['port'], $con_params['user'], $con_params['password'], $con_params['vhost']);
+
+		$exchange_options = empty($config['exchange_options']) ? array() : $config['exchange_options'];
+		$consumer->setExchangeOptions($exchange_options);
+
+		if (!emtpy($config['callback'])) {
+			$consumer->setCallback(array($config['callback'],'execute'));
+		}
+
+
+		if (!emtpy($config['routing_key'])) {
+			$consumer->setRoutingKey($config['routing_key']);
+		}
+
+
+
+		return $consumer;
+	}
+
 }
