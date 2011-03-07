@@ -48,7 +48,6 @@ class sfRabbit {
 
 	public static function getConsumer($name) {
 		$config = sfConfig::get('app_sfRabbitPlugin_consumers');
-
 		if (empty($config[$name]) or !$config = $config[$name]) {
 			throw new Exception(sprintf('There is no rabbitmq consumers with "%s" name in config', $name));
 		}
@@ -64,7 +63,7 @@ class sfRabbit {
 		$queue_options = empty($config['queue_options']) ? array() : $config['queue_options'];
 		$consumer->setQueueOptions($queue_options);
 
-		if (!emtpy($config['callback'])) {
+		if (!empty($config['callback'])) {
 			$consumer->setCallback(array($config['callback'], 'execute'));
 		}
 
