@@ -64,6 +64,10 @@ class sfRabbit {
 		$queue_options = empty($config['queue_options']) ? array() : $config['queue_options'];
 		$consumer->setQueueOptions($queue_options);
 
+		if (!emtpy($config['callback'])) {
+			$consumer->setCallback(array($config['callback'],'execute'));
+		}
+
 		return $consumer;
 	}
 
