@@ -8,6 +8,7 @@ class rabbitmqRpcServerTask extends sfBaseTask {
 		));
 
 		$this->addOptions(array(
+			new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
 			new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
 		));
 
@@ -23,9 +24,9 @@ EOF;
 	}
 
 	protected function execute($arguments = array(), $options = array()) {
-		define('AMQP_DEBUG', $options['env']=='dev');
+		define('AMQP_DEBUG', $options['env'] == 'dev');
 
-		$server=sfRabbit::getRpcServer($arguments['name']);
+		$server = sfRabbit::getRpcServer($arguments['name']);
 		$server->start();
 	}
 

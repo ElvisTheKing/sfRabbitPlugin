@@ -8,6 +8,7 @@ class rabbitmqConsumerTask extends sfBaseTask {
 		));
 
 		$this->addOptions(array(
+			new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
 			new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
 			new sfCommandOption('messages', 'm', sfCommandOption::PARAMETER_OPTIONAL, 'Number of messages to consume', 1),
 		));
@@ -24,9 +25,9 @@ EOF;
 	}
 
 	protected function execute($arguments = array(), $options = array()) {
-		define('AMQP_DEBUG', $options['env']=='dev');
+		define('AMQP_DEBUG', $options['env'] == 'dev');
 
-		$consumer=sfRabbit::getConsumer($arguments['name']);
+		$consumer = sfRabbit::getConsumer($arguments['name']);
 		$consumer->consume($options['messages']);
 	}
 
