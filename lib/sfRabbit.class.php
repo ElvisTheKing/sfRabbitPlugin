@@ -67,6 +67,10 @@ class sfRabbit {
 			$consumer->setCallback(array($config['callback'], 'execute'));
 		}
 
+		if (!empty($config['routing_key'])) {
+			$consumer->setRoutingKey($config['routing_key']);
+		}
+
 		return $consumer;
 	}
 
@@ -95,6 +99,7 @@ class sfRabbit {
 
 
 		if (!empty($config['routing_key'])) {
+		
 			$consumer->setRoutingKey($config['routing_key']);
 		}
 
