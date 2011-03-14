@@ -26,7 +26,7 @@ EOF;
 	}
 
 	protected function execute($arguments = array(), $options = array()) {
-		define('AMQP_DEBUG', $options['env'] == 'dev');
+		define('AMQP_DEBUG', (bool) sfConfig::get('app_sfRabbitPlugin_debug',0));
 
 		$consumer = sfRabbit::getAnonConsumer($arguments['name']);
 		$consumer->setRoutingKey($options['r_key']);

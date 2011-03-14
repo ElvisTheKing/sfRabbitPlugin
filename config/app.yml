@@ -1,5 +1,6 @@
 #all:
 #  sfRabbitPlugin:
+#    debug: false
 #    connections:
 #      default:
 #        host:      localhost
