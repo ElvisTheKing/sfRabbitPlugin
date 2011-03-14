@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/../php-amqplib/amqp.inc';
+require_once dirname(__FILE__) .'/../php-amqplib/amqp.inc';
 
 
 class BaseAmqp

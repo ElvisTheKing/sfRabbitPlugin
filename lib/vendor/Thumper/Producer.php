@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/BaseAmqp.php');
+require_once(dirname(__FILE__)  . '/BaseAmqp.php');
 
 class Producer extends BaseAmqp
 {
