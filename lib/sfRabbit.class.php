@@ -85,7 +85,7 @@ class sfRabbit {
 		$exchange_options = empty($config['exchange_options']) ? array() : $config['exchange_options'];
 		$consumer->setExchangeOptions($exchange_options);
 
-		if (!emtpy($config['callback'])) {
+		if (!empty($config['callback'])) {
 			$callback = $config['callback'];
 			if (!is_array($callback)) {
 				$callback = array($callback, 'execute');
@@ -94,7 +94,7 @@ class sfRabbit {
 		}
 
 
-		if (!emtpy($config['routing_key'])) {
+		if (!empty($config['routing_key'])) {
 			$consumer->setRoutingKey($config['routing_key']);
 		}
 

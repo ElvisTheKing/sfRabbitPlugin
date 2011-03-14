@@ -29,7 +29,8 @@ EOF;
 		define('AMQP_DEBUG', $options['env'] == 'dev');
 
 		$consumer = sfRabbit::getAnonConsumer($arguments['name']);
-		$consumer->setRoutingKey($options['routing_key']);
+		$consumer->setRoutingKey($options['r_key']);
+
 		$consumer->consume($options['messages']);
 	}
 
