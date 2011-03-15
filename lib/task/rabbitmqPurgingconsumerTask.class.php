@@ -30,6 +30,8 @@ EOF;
 		$m = $options['messages'];
 		$consume = true;
 
+		if ($m==0 or $m<-1) {return;}
+
 		while ($consume) {
 			$consumer = sfRabbit::getConsumer($arguments['name']);
 			$consumer->consume(1);
@@ -37,7 +39,7 @@ EOF;
 			$consumer->purge();
 
 			if ($m != -1) {
-				if ($m > 0) {
+				if ($m > 1) {
 					$m--;
 				} else {
 					$consume = false;
