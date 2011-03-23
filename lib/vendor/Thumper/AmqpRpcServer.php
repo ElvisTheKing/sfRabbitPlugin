@@ -2,7 +2,7 @@
 
 require_once(dirname(__FILE__)  . '/BaseAmqp.php');
 
-class RpcServer extends BaseConsumer
+class  AmqpRpcServer extends BaseConsumer
 {
   public function initServer($name)
   {

@@ -116,7 +116,7 @@ class sfRabbit {
 		$con_name = (empty($config['connection'])) ? ('default') : ($config['connection']);
 		$con_params = self::getConnectionParams($con_name);
 
-		$client = new RpcClient($con_params['host'], $con_params['port'], $con_params['user'], $con_params['password'], $con_params['vhost']);
+		$client = new AmqpRpcClient($con_params['host'], $con_params['port'], $con_params['user'], $con_params['password'], $con_params['vhost']);
 		$client->initClient();
 
 		return $client;
@@ -136,7 +136,7 @@ class sfRabbit {
 		$con_name = (empty($config['connection'])) ? ('default') : ($config['connection']);
 		$con_params = self::getConnectionParams($con_name);
 
-		$server = new RpcServer($con_params['host'], $con_params['port'], $con_params['user'], $con_params['password'], $con_params['vhost']);
+		$server = new AmqpRpcServer($con_params['host'], $con_params['port'], $con_params['user'], $con_params['password'], $con_params['vhost']);
 		$server->initServer($name);
 
 		$callback = $config['callback'];

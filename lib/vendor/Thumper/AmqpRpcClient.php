@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__)  . '/BaseAmqp.php');
 
-class RpcClient extends BaseAmqp
+class AmqpRpcClient extends BaseAmqp
 {
   protected $requests = 0;
   protected $replies = array();
