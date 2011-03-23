@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/BaseConsumer.php');
+require_once(dirname(__FILE__)  . '/BaseAmqp.php');
 
 class RpcServer extends BaseConsumer
 {
