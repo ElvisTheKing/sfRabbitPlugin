@@ -39,6 +39,8 @@ EOF;
 				if (!empty($consumer) and get_class($consumer) == 'Consumer' and $m != -1) {
 					$m = $m - $consumer->getConsumed();
 				}
+				$this->log($e);
+				error_log($e);
 				sleep($options['reconnect_period']);
 			}
 		}

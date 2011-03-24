@@ -34,6 +34,8 @@ EOF;
 				$server->start();
 				break;
 			} catch (Exception $e) {
+				$this->log($e);
+				error_log($e);
 				sleep($options['reconnect_period']);
 			}
 		}
