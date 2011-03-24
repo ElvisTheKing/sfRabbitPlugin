@@ -11,6 +11,7 @@ class rabbitmqPurgingconsumerTask extends sfBaseTask {
 			new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
 			new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
 			new sfCommandOption('messages', 'm', sfCommandOption::PARAMETER_OPTIONAL, 'Number of messages to consume', 1),
+			new sfCommandOption('reconnect_period', 't', sfCommandOption::PARAMETER_OPTIONAL, 'If connection fails retry after n second', 10),
 		));
 
 		$this->namespace = 'rabbitmq';
@@ -30,20 +31,27 @@ EOF;
 		$m = $options['messages'];
 		$consume = true;
 
-		if ($m==0 or $m<-1) {return;}
+		if ($m == 0 or $m < -1) {
+			return;
+		}
 
 		while ($consume) {
-			$consumer = sfRabbit::getConsumer($arguments['name']);
-			$consumer->consume(1);
-			$consumer = sfRabbit::getConsumer($arguments['name']);
-			$consumer->purge();
+			try {
+				$consumer = sfRabbit::getConsumer($arguments['name']);
+				$consumer->consume(1);
+				$consumer = sfRabbit::getConsumer($arguments['name']);
+				$consumer->purge();
 
-			if ($m != -1) {
-				if ($m > 1) {
-					$m--;
-				} else {
-					$consume = false;
+
+				if ($m != -1) {
+					if ($m > 1) {
+						$m--;
+					} else {
+						$consume = false;
+					}
 				}
+			} catch (Exception $e) {
+				sleep($options['reconnect_period']);
 			}
 		}
 	}

@@ -37,4 +37,8 @@ class Consumer extends BaseConsumer {
 		}
 	}
 
+	public function getConsumed() {
+		return $this->consumed;
+	}
+
 }

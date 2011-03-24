@@ -10,6 +10,7 @@ class rabbitmqRpcServerTask extends sfBaseTask {
 		$this->addOptions(array(
 			new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
 			new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+			new sfCommandOption('reconnect_period', 't', sfCommandOption::PARAMETER_OPTIONAL, 'If connection fails retry after n second', 10),
 		));
 
 		$this->namespace = 'rabbitmq';
@@ -24,10 +25,18 @@ EOF;
 	}
 
 	protected function execute($arguments = array(), $options = array()) {
-		define('AMQP_DEBUG', (bool) sfConfig::get('app_sfRabbitPlugin_debug',0));
+		define('AMQP_DEBUG', (bool) sfConfig::get('app_sfRabbitPlugin_debug', 0));
 
-		$server = sfRabbit::getRpcServer($arguments['name']);
-		$server->start();
+
+		while (true) {
+			try {
+				$server = sfRabbit::getRpcServer($arguments['name']);
+				$server->start();
+				break;
+			} catch (Exception $e) {
+				sleep($options['reconnect_period']);
+			}
+		}
 	}
 
 }
