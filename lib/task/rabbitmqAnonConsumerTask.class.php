@@ -12,7 +12,7 @@ class rabbitmqAnonConsumerTask extends sfBaseTask {
 			new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
 			new sfCommandOption('messages', 'm', sfCommandOption::PARAMETER_OPTIONAL, 'Number of messages to consume', 1),
 			new sfCommandOption('r_key', 'r', sfCommandOption::PARAMETER_OPTIONAL, 'Routing Key', '#'),
-			new sfCommandOption('reconnect_period', 't', sfCommandOption::PARAMETER_OPTIONAL, 'If connection fails retry after n second', 10),
+			new sfCommandOption('reconnect_period', 'p', sfCommandOption::PARAMETER_OPTIONAL, 'If connection fails retry after n second', 10),
 		));
 
 		$this->namespace = 'rabbitmq';

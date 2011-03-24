@@ -10,7 +10,7 @@ class rabbitmqRpcServerTask extends sfBaseTask {
 		$this->addOptions(array(
 			new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
 			new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-			new sfCommandOption('reconnect_period', 't', sfCommandOption::PARAMETER_OPTIONAL, 'If connection fails retry after n second', 10),
+			new sfCommandOption('reconnect_period', 'p', sfCommandOption::PARAMETER_OPTIONAL, 'If connection fails retry after n second', 10),
 		));
 
 		$this->namespace = 'rabbitmq';
