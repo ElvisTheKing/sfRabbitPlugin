@@ -44,6 +44,6 @@ define consumer in config
         queue_options: {name: test}
         callback:         MsgHandler 
         
-==== run consumer task or check its code and use it somewhere else ====
+run consumer task or check its code and use it somewhere else
 symfony rabbitmq:consumer test 
 you can find all optional arguments in source code
