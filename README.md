@@ -4,6 +4,10 @@ Now it's just backport of videlalvaro's symfony2 [RabbitMqBundle](https://github
 
 It uses Consumer and Producer classes from thumper ( https://github.com/videlalvaro/Thumper ), but configures them via symfony yml configuration, so checkout thumper examples too!
 
+# Enable the plugin #
+
+		$this->enablePlugins('sfRabbitPlugin');
+
 # Some examples: #
 
 ## Publish message $msg with $routing_key ##
